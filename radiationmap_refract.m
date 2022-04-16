@@ -1,6 +1,6 @@
 load('total_tri.mat');
 load('broadleaf.mat');
-load('total_sec_a60.mat');
+load('total_sec.mat');
 hold on
 for i = 1:size(total_sec,1)
     total_sec(i,7) = total_tri(total_sec(i,6),10);
