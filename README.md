@@ -1,40 +1,39 @@
-# Source-code-of-TingYun-Project-Shortwave
 # 1.Run process
 
-**Note: the file reading path needs to be adjusted**	
+**Note: the file loading path needs to be adjusted**    
 
-​	The procedure should be executed in the following order to accomplish the separation of incident vector calculation, tree plot modeling, boundary definition, intersection calculation and calculation and rendering of plot radiation. 
+The procedure should be executed in the following order to accomplish the solar radiation calculation. The specific steps are as follows: the vector of incident light calculation, tree plot modeling, determination of the distribution range of incident light source points, intersection of solar beams (incident, reflected and transmitted) with target forest plots and calculation and rendering of plot radiant flux. 
 
 ## 1.1 Run incident vector calculation program
  
-​	Run angle_cal.m file and sava the result (sun.mat) corresponds to Aangle and Zangle in anglecalculate.m file in the folder
-	Run anglecalculate.m and save the result (ndir.mat) in the folder
+    Run angle_cal.m file to obtain and save the result (sun.mat), which contains the current sun altitude and azimuth angles taken as the input for anglecalculate.m file. 
+
+**Note: Input date, latitude, longitude, time and other parameters, the current sun altitude and azimuth angle can be automatically calculated**
+
+    Run anglecalculate.m and save the result of solar light beam vector (ndir.mat) in the folder  **Note: The input parameters here are the azimuth and zenith angles obtained after running angle_cal.m**
 
 ## 1.2 Run tree plot modeling program
 
- **Note: Since the different plots in this experiment have a separate folder, "total_tri.mat" is not differentiated**
+ **Note: Different plots in this experiment have a separate folder.
+    Run the conifer_total.m file for the conifer plot, and save the corresponding result (total_tri.mat) in the folder named “conifer”.
+    Run the broadleaf_total.m file for the broadleaf plot, and save the corresponding result (total_tri.mat) in the folder named “broadleaf”.
+    Run the mixed_total.m file for the mixed plot, and save the corresponding result (total_tri.mat) in the folder named “mixed_tree”.
 
-​	Just run the conifer_total.m file, and save the result (total_tri.mat) in the folder
-	Just run the broadleaf_total.m file, and save the result (total_tri.mat) in the folder
-	Just run the mixed_total.m file, and save the result (total_tri.mat) in the folder
+## 1.2 Run the program of determination of the distribution range of incident light source points 
 
-## 1.2 Run boundary definition program
-
-	Just run the findchushi.m file, and save the result (chushi) in the folder
+    Run the findchushi.m file, and save the result (chushi.mat) in the folder
 
 ## 1.3 Run intersection calculation program
 
- **Note: The "total_sec.mat" imported when running radiationmap_refract.m file needs to comment out the last three lines of code in the radiationmap.m file**
+    Run the radiationmap.m file which corresponds to the simulation of incident solar beams illuminated the current forest plot., and save the result (total_sec.mat) in the folder. The result only manifests the first intersection points of each solar beam with triangles of forest plots.
+    Then run the radiationmap_reflect.m file which corresponds to the simulation of reflected solar beams illuminated the current forest plot., and manually save the result (total_secref.mat) in the folder
+    Then run the radiationmap_refract.m file which corresponds to the simulation of transmitted solar beams illuminated the current forest plot., and manually save the result (total_secrefract.mat) in the folder   **Note: Before running radiationmap_refract.m file, it is necessary to comment out the last three lines of code in the radiationmap.m file in order to acquire all the intersected points between the incident solar beams and triangles of forest plots, and then recalculate the "total_sec.mat" for radiationmap_refract.m.**
 
-​	Just run the radiationmap.m file, and save the result (total_sec.mat) in the folder
-	Then run the radiationmap_reflect.m file, and save the result (total_secref.mat) in the folder
-	Then run the radiationmap_refract.m file, and save the result (total_secrefract.mat) in the folder
+## 1.4 Calculating and rendering of forest plot radiant flux program
 
-## 1.4 Run calculation and rendering of plot radiation program
+ **Note1: The trunks of three forest plots can be simulated separately in conifer.m, broadleaf.m and mixed.m files; rgbxxx.mat" is a n*3 matrix representing the RGB value regarding the adopted colorbar here **
 
- **Note1: The trunk simulation of different forest stands is different, the detailed difference can be viewed in conifer.m, broadleaf.m and mixed.m files; rgbxxx.mat" is a color gradient n*3 rgb matrix**
-
-​	Run incident.m, reflect.m, refract.m, file successively and save the result (total_energy) in the folder
+    Run incident.m, reflect.m, refract.m files consequently rendering the visual results of the illuminated forest plot and save the results (total_energy) in the folder
 
 # 2. key parameters
 
@@ -53,5 +52,4 @@ num = 15 % The number of sampling points on the triangulation concentric circles
 % parameters in radiationmap.m
 x0 = (chushi(1):acc:chushi(2))'; % The sampling interval of the incident light source point
 y0 = (chushi(3):acc:chushi(4))';
-```
 
